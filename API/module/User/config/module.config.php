@@ -1,12 +1,15 @@
 <?php
 
-use Zend\InputFilter\CollectionInputFilter;
-
 return [
     'service_manager' => [
         'factories' => [
             \User\V1\Rest\User\UserResource::class => \User\V1\Rest\User\UserResourceFactory::class,
         ],
+        'input_filters' => [
+            'invokables' => [
+                \Application\Service\MyCollectionInputFilter::class  => \Application\Service\MyCollectionInputFilter::class,
+            ],
+        ]
     ],
     'router' => [
         'routes' => [
@@ -91,59 +94,43 @@ return [
     ],
     'input_filter_specs' => [
         'User\\V1\\Rest\\User\\Validator' => [
-            0 => [ 'name' => 'emails',
-                    'type' => CollectionInputFilter::class,
-                    'required' => false,
-                    'input_filter' => [
-                        'email' => [
-                            'required' => true,
-                            'filters' => [
-                                0 => [
-                                    'name' => \Zend\Filter\StringTrim::class,
-                                ],
-                                1 => [
-                                    'name' => \Zend\Filter\StripTags::class,
-                                ],
+            0 => [
+                'name' => 'emails',
+                'type' => \Application\Service\MyCollectionInputFilter::class,
+              // 'type' =>  \Zend\InputFilter\CollectionInputFilter::class,
+                'required' => false,
+                'input_filter' => [
+                    'email' => [
+                        'required' => true,
+                        'filters' => [
+                            0 => [
+                                'name' => \Zend\Filter\StringTrim::class,
                             ],
-                            'validators' => [
-                                0 => [
-                                    'name' => \Zend\Validator\EmailAddress::class,
-                                    'options' => [],
-                                ],
-//                                1 => [
-//                                      new \Zend\Validator\Callback(
-//                                        array(
-//                                            'messages' => array(\Zend\Validator\Callback::INVALID_VALUE => '%value% must be an array'),
-//                                            'callback' => function($value){
-//                                                return is_array($value);
-//                                            })),
-//                                ],
+                            1 => [
+                                'name' => \Zend\Filter\StripTags::class,
+                            ],
+                        ],
+                        'validators' => [
+                            0 => [
+                                'name' => \Zend\Validator\EmailAddress::class,
+                                'options' => [],
                             ],
                         ],
                     ],
-                    'validators' => [
-                        0 => [
-                            new \Zend\Validator\Callback(
-                                array(
-                                    'messages' => array(\Zend\Validator\Callback::INVALID_VALUE => '%value% must be an array'),
-                                    'callback' => function($value){
-                                        return is_array($value);
-                                    })),
-                        ],
-                        1 => [
-                                      new \Zend\Validator\Callback(
-                                        array(
-                                            'messages' => array(\Zend\Validator\Callback::INVALID_VALUE => '%value% must be an array'),
-                                            'callback' => function($value){
-                                                return is_array($value);
-                                            })),
-                                ],
-                    ],
-                    'filters' => [],
-                    'description' => 'Matriz (array multi-dimensional)  contendo valores de um ou mais emails',
-                    'field_type' => 'Array',
-                    'error_message' => 'Este campo tem de ser uma Matriz (array multi-dimensional)  contendo valor "email": Com um Email válido.',
                 ],
+                'validators' => [],
+                'filters' => [],
+                'description' => 'Matriz (array multi-dimensional)  contendo valores de um ou mais emails',
+                'field_type' => 'Array',
+                'error_message' => 'Este campo tem de ser uma Matriz (array multi-dimensional)  contendo valor "email": Com um Email válido.',
+            ],
+            1 => [
+                'name' => 'firstName',
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'error_message' => 'First Name é obrigatório',
             ],
         ],
-    ];
+    ],
+];

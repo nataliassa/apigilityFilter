@@ -5,11 +5,11 @@ return [
         'factories' => [
             \User\V1\Rest\User\UserResource::class => \User\V1\Rest\User\UserResourceFactory::class,
         ],
-        'input_filters' => [
-            'invokables' => [
-                \Application\Service\MyCollectionInputFilter::class  => \Application\Service\MyCollectionInputFilter::class,
-            ],
-        ]
+    ],
+    'input_filters' => [
+        'invokables' => [
+            "MyCollectionInputFilter"  => \Application\Service\MyCollectionInputFilter::class,
+        ],
     ],
     'router' => [
         'routes' => [
@@ -96,7 +96,7 @@ return [
         'User\\V1\\Rest\\User\\Validator' => [
             0 => [
                 'name' => 'emails',
-                'type' => \Application\Service\MyCollectionInputFilter::class,
+                'type' => "MyCollectionInputFilter",
               // 'type' =>  \Zend\InputFilter\CollectionInputFilter::class,
                 'required' => false,
                 'input_filter' => [

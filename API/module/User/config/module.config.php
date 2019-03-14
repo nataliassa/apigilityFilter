@@ -8,7 +8,7 @@ return [
     ],
     'input_filters' => [
         'invokables' => [
-            "MyCollectionInputFilter"  => \Application\Service\MyCollectionInputFilter::class,
+            \Application\Service\MyCollectionInputFilter::class => \Application\Service\MyCollectionInputFilterFactory::class,
         ],
     ],
     'router' => [
@@ -96,7 +96,7 @@ return [
         'User\\V1\\Rest\\User\\Validator' => [
             0 => [
                 'name' => 'emails',
-                'type' => "MyCollectionInputFilter",
+                'type' => \Application\Service\MyCollectionInputFilter::class,
               // 'type' =>  \Zend\InputFilter\CollectionInputFilter::class,
                 'required' => false,
                 'input_filter' => [

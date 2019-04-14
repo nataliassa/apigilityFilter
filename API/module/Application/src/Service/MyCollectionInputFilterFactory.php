@@ -2,7 +2,6 @@
 
 namespace Application\Service;
 
-
 class MyCollectionInputFilterFactory
 {
     /**

@@ -1,14 +1,14 @@
 <?php
-
 return [
     'service_manager' => [
         'factories' => [
             \User\V1\Rest\User\UserResource::class => \User\V1\Rest\User\UserResourceFactory::class,
+            \Application\Service\MyCollectionInputFilter::class => \Application\Service\MyCollectionInputFilterFactory::class,
         ],
     ],
     'input_filters' => [
         'invokables' => [
-            \Application\Service\MyCollectionInputFilter::class => \Application\Service\MyCollectionInputFilterFactory::class,
+            'MyCollectionInputFilter' => \Application\Service\MyCollectionInputFilter::class,
         ],
     ],
     'router' => [
@@ -96,8 +96,7 @@ return [
         'User\\V1\\Rest\\User\\Validator' => [
             0 => [
                 'name' => 'emails',
-                'type' => \Application\Service\MyCollectionInputFilter::class,
-              // 'type' =>  \Zend\InputFilter\CollectionInputFilter::class,
+                'type' => 'MyCollectionInputFilter',
                 'required' => false,
                 'input_filter' => [
                     'email' => [
